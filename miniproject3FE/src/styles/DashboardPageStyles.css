@@ -19,8 +19,7 @@ body {
 .notification-icon {
   width: 30px; /* Adjust size as needed */
   height: 30px; /* Adjust size as needed */
-  cursor: pointer; /* Makes it look clickable */
-  transition: opacity 0.3s ease;
+  
 }
 
 .notification-icon:hover {

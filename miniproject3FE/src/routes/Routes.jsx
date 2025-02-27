@@ -11,9 +11,10 @@ import AboutUs from "../pages/AboutUs";
 import PrivacyPolicy from "../pages/PrivacyPolicy";
 import TermsService from "../pages/TermsService";
 import Contact from "../pages/Contact";
-import ProfilePage from "../pages/ProfilePage";
+import CreatePlayerCard from "../pages/CreatePlayerCard"
 import News from "../pages/News";
 import Community from "../pages/Community";
+import ProfilePage from "../pages/Profile";
 
 const AppRoutes = () => {
   return (
@@ -30,9 +31,10 @@ const AppRoutes = () => {
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/terms-of-service" element={<TermsService />} />
       <Route path="/contact" element={<Contact />} />
-      <Route path="/profile" element={<ProfilePage/>} /> 
+      <Route path="/create-player-card" element={<CreatePlayerCard/>} /> 
       <Route path="/news" element={<News/>} />
       <Route path="/community" element={<Community/>} />
+      <Route path="/profile" element={<ProfilePage/>} />
      
     </Routes>
   );

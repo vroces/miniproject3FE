@@ -1,5 +1,6 @@
 import React from "react";
-import PlayerCards from "../components/PlayerCards"; // Import PlayerCards component
+import { Link } from "react-router-dom";
+import PlayerCards from "../components/PlayerCards";
 import "../styles/PlayerCardsPage.css";
 import LogoutButton from "../components/LogoutButton";
 import HomeButton from "../components/HomeButton";
@@ -13,14 +14,22 @@ const PlayerCardsPage = () => {
         <span className="swipe-right">Swipe Right to Follow Player</span>
       </div>
 
+      {/* Place the "Click here" text directly below the swipe instructions */}
+      <div className="create-player-card">
+        <span>
+          Click <Link to="/create-player-card">here</Link> to create your own custom player card!
+        </span>
+      </div>
+
+      {/* Player cards container */}
       <div className="player-cards-container">
-        {/* Position buttons within the container */}
         <HomeButton />
         <LogoutButton />
-        <PlayerCards /> {/* Use the PlayerCards component here */}
+        <PlayerCards />
       </div>
     </div>
   );
 };
 
 export default PlayerCardsPage;
+

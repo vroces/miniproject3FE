@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import HomeButton from "../components/HomeButton";
 import LogoutButton from "../components/LogoutButton";
 import Footer from "../components/Footer";
+import "../styles/CreatePlayerCardPage.css";
 
-import "../styles/ProfilePage.css";
-
-const ProfilePage = () => {
+const CreatePlayerCard = () => {
   const [profilePic, setProfilePic] = useState(null); // Track profile pic URL
   const [position, setPosition] = useState("");
   const [location, setLocation] = useState("");
@@ -84,4 +83,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default CreatePlayerCard;

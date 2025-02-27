@@ -1,9 +1,9 @@
 import React from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import '../styles/Placeholder.css'
+import '../styles/PlaceHolder.css'
 
-const News = () => {
+const ProfilePage = () => {
   return (
     <div className="news-container">
       <Header />
@@ -13,4 +13,4 @@ const News = () => {
   )
 }
 
-export default News
+export default ProfilePage

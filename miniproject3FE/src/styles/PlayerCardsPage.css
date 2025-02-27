@@ -72,6 +72,22 @@
 
 
 
+.create-player-card {
+  position: absolute;
+  top: 150px; /* Adjust based on .swipe-instructions */
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 18px;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid yellow; 
+  z-index: 20; /* Ensure it's above other elements */
+}
+
+
 
 
 
@@ -89,6 +105,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  padding-top: 50px;
 }
 
 .player-card {
