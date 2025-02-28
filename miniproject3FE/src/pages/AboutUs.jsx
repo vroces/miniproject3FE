@@ -2,7 +2,7 @@ import React from "react";
 import HomeButton from "../components/HomeButton";
 import LogoutButton from "../components/LogoutButton";
 import "../styles/AboutUs.css";
-
+import Footer from "../components/Footer";
 const AboutUs = () => {
   return (
     <div className="about-us-page">
@@ -67,7 +67,7 @@ const AboutUs = () => {
 </div>
 
 
-
+<Footer/>
     </div>
   );
 };

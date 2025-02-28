@@ -24,6 +24,7 @@
     overflow: hidden; /* Prevents overflow in any direction */
     position: relative;
     margin: 0; /* Remove any margin */
+   
   }
   
   .about-us-page p {
@@ -33,6 +34,7 @@
     text-align: justify;
     text-indent: 20px;
     max-width: 800px; /* Keeps text readable on larger screens */
+    
   }
   
   .about-us-heading {
@@ -72,6 +74,7 @@
     height: 0;              /* Remove explicit height */
     overflow: hidden;
     margin-top: 25px;
+   
     
   }
   
@@ -82,6 +85,7 @@
     width: 800px;            
     height: 500px;           /* 100% of container's height */
     border: 4px solid rgb(223, 183, 52)
+
   }
   
   

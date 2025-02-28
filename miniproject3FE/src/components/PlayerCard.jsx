@@ -55,7 +55,10 @@ const PlayerCard = ({ player, onSwipeLeft, onSwipeRight }) => {
         transition: isDragging ? 'none' : 'transform 0.3s ease-out, opacity 0.3s ease-out',
       }}
     >
-      <img src={player.profilePic} alt={player.name} />
+     <img src={`http://localhost:5001/${player.profilePic}`} alt={player.name} />
+
+     
+
       <h3>{player.name}</h3>
       <p><strong>Position:</strong>{player.position}</p>
       <p><strong>Location:</strong> {player.location}</p>
