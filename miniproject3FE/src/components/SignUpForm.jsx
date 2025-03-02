@@ -11,7 +11,6 @@ const SignUpForm = () => {
     username: "",
     role: "",
   });
-
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
@@ -56,6 +55,9 @@ const SignUpForm = () => {
         const data = await response.json();
         if (response.ok) {
           console.log("User registered successfully", data);
+          // Log the user in after successful registration
+          login(data.user); // Assuming the response contains user data that you need for login
+          
           navigate("/dashboard"); // Navigate to the dashboard if registration is successful
         } else {
           console.error("Error registering user:", data.message);
