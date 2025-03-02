@@ -9,7 +9,7 @@ const WelcomeMessage = () => {
 
   return (
     <div className="welcome-container">
-      <h2>Welcome, {user.name}!</h2>
+      <h2>Welcome, {user.full_name || user.username}!</h2> {/* Display full_name or username */}
     </div>
   );
 };

@@ -1,12 +1,15 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"; // Use your AuthContext for user login
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { login } = useAuth(); // Access login function from AuthContext
+  const navigate = useNavigate(); // Hook for navigation
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (!email || !password) {
@@ -14,13 +17,28 @@ const LoginForm = () => {
       return;
     }
 
-    // Example login logic (you can replace with actual logic)
-    if (email !== "test@example.com" || password !== "password") {
-      setError("Invalid credentials. Please try again.");
-    } else {
-      setError("");
-      // Proceed with login (e.g., redirect, set auth state)
-      console.log("Logged in successfully");
+    try {
+      // Send login request to the backend
+      const response = await fetch("http://localhost:5001/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Login successful, store user data and redirect
+        login(data.user); // Assuming the backend returns the user data
+        navigate("/dashboard"); // Redirect to dashboard after successful login
+      } else {
+        setError(data.message || "Invalid credentials. Please try again.");
+      }
+    } catch (err) {
+      console.error("Error logging in:", err);
+      setError("An error occurred. Please try again later.");
     }
   };
 
@@ -64,4 +82,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
-
