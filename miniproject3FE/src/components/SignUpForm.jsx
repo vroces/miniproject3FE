@@ -31,35 +31,91 @@ const SignUpForm = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+  
     if (validateForm()) {
       const userData = {
-        name: formData.fullName,
         email: formData.email,
+        password: formData.password, // Add password to userData
+        full_name: formData.fullName,
+        username: formData.username,
         role: formData.role,
       };
-      login(userData); // Store user data globally
-      navigate("/dashboard"); // Redirect after successful signup
+  
+      // Send POST request to register user
+      try {
+        const response = await fetch("http://localhost:5001/api/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        });
+  
+        const data = await response.json();
+        if (response.ok) {
+          console.log("User registered successfully", data);
+          navigate("/dashboard"); // Navigate to the dashboard if registration is successful
+        } else {
+          console.error("Error registering user:", data.message);
+        }
+      } catch (error) {
+        console.error("Error sending registration request:", error);
+      }
     }
   };
+  
 
   return (
     <div className="login-form">
       <form onSubmit={handleSubmit}>
-        <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
         {errors.email && <p className="error">{errors.email}</p>}
 
-        <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
         {errors.password && <p className="error">{errors.password}</p>}
 
-        <input type="text" name="fullName" placeholder="Full Name" value={formData.fullName} onChange={handleChange} required />
+        <input
+          type="text"
+          name="fullName"
+          placeholder="Full Name"
+          value={formData.fullName}
+          onChange={handleChange}
+          required
+        />
         {errors.fullName && <p className="error">{errors.fullName}</p>}
 
-        <input type="text" name="username" placeholder="Username" value={formData.username} onChange={handleChange} required />
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          value={formData.username}
+          onChange={handleChange}
+          required
+        />
         {errors.username && <p className="error">{errors.username}</p>}
 
-        <select name="role" value={formData.role} onChange={handleChange} required>
+        <select
+          name="role"
+          value={formData.role}
+          onChange={handleChange}
+          required
+        >
           <option value="" disabled>Select Role</option>
           <option value="player">Player</option>
           <option value="coach">Coach</option>
@@ -67,11 +123,12 @@ const SignUpForm = () => {
         </select>
         {errors.role && <p className="error">{errors.role}</p>}
 
-        <button type="submit" className="signup-button">Sign Up</button>
+        <button type="submit" className="signup-button">
+          Sign Up
+        </button>
       </form>
     </div>
   );
 };
 
 export default SignUpForm;
-
