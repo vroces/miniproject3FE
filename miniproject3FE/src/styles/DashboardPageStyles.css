@@ -28,19 +28,37 @@ body {
 
 /* Header */
 .dashboard-header {
-  /* border: 6px solid red; */
   width: 100vw;
-  /* display: flex; */
-  flex-wrap: wrap;
+flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
   background-color: black;
   color: white;
-  /* padding: 5px 20px; */
   position: relative;
   background-image: url("../assets/sheplays.png");
   background-position: center;
   background-repeat: repeat;
+}
+
+.logout-container {
+  position: absolute;  /* Allows positioning the button inside the header */
+  bottom: 8px;  /* Positions the button 10px from the bottom of the header */
+  right: 20px;  /* Positions the button 20px from the right edge of the header */
+}
+
+/* Optional: Style the button */
+.logout-container button {
+  padding: 10px 20px;
+  background-color: #f39c12;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  
+}
+
+.logout-container button:hover {
+  background-color: #e67e22;
 }
 
 /* Default size for medium */
@@ -84,6 +102,7 @@ body {
   display: flex;
   align-items: center;
   margin-top: 5px;
+  padding-bottom: 70px;
 }
 
 .nav ul {
@@ -109,6 +128,7 @@ body {
   margin-left: 20px;
   display: block;
   margin-left: 20px;
+  padding-bottom: 50px;
 }
 /* Profile Picture Container */
 .profile-pic-with-notification {
@@ -118,22 +138,19 @@ body {
 /* Notification Icon Container */
 .notification-container {
   position: absolute;
-  bottom: -5px; /* Position it slightly above the profile picture */
-  left: -20px; /* Position it slightly to the right of the profile picture */
+  bottom: 2px; /* Position it slightly above the profile picture */
+  left: -10px; /* Position it slightly to the right of the profile picture */
   width: 20px; /* Adjust size of notification icon */
   height: 20px;
-  cursor: pointer;
+  
 }
 
 .notification-icon {
   width: 100%; /* Makes the icon fill the container */
   height: 100%; /* Makes the icon fill the container */
+  pointer-events: none;
 }
 
-/* Optional: Hover effect */
-.notification-container:hover .notification-icon {
-  opacity: 0.7;
-}
 .profile-pic {
   width: 100px; /* Fixed width */
   height: 100px; /* Fixed height (same as width for a perfect circle) */

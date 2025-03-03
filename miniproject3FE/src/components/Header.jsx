@@ -2,8 +2,9 @@ import React from 'react';
 
 import Navigation from './Navigation';
 import Profile from './Profile';
-import SearchBar from './SearchBar';
+
 import WelcomeMessage from './WelcomeMessage';
+import LogoutButton from './LogoutButton';
 
 const Header = () => {
   console.log("Header component rendered!");
@@ -16,11 +17,10 @@ return (
           <Navigation />
           <Profile />
         </div>
-
-        {/* Search Bar placed below */}
-        <SearchBar />
+<div className="logout-container">
+        <LogoutButton />
       </div>
-    
+      </div>
     <WelcomeMessage />
   </header>
 );
