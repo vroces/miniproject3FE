@@ -2,15 +2,17 @@ import React from 'react';
 import "../styles/PrivacyPolicy.css";
 import LogoutButton from '../components/LogoutButton';
 import HomeButton from '../components/HomeButton';
+import Footer from '../components/Footer';
 
 const PrivacyPolicy = () => {
   return (
-    <div className="privacy-policy-page">
-      <HomeButton/>
-      <LogoutButton/>
-      <h1 className="title">Privacy Policy</h1>
-      <p className="last-updated">Last updated: February 16, 2025</p>
-      <p>
+    <div className="privacy-policy-page-container">
+      <div className="privacy-policy-page">
+        <HomeButton />
+        <LogoutButton />
+        <h1 className="title">Privacy Policy</h1>
+        <p className="last-updated">Last updated: February 16, 2025</p>
+        <p>
         This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information when You use the Service and tells You about Your privacy rights and how the law protects You.
       </p>
       <p>
@@ -102,7 +104,10 @@ const PrivacyPolicy = () => {
       <ul>
         <li>By email: <a href="mailto:sheplaysfootball@gmail.com">sheplaysfootball@gmail.com</a></li>
       </ul>
+  </div>
+  <Footer />
     </div>
+  
   );
 };
 

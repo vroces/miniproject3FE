@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import HomeButton from "../components/HomeButton";
 import LogoutButton from "../components/LogoutButton";
 import "../styles/ContactUs.css"; 
+import Footer from "../components/Footer";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -24,9 +25,10 @@ const Contact = () => {
   };
 
   return (
-    <div className="contact-page">
-      <HomeButton />
-      <LogoutButton />
+    <div className="contact-page-container">
+      <div className="contact-page">
+        <HomeButton />
+        <LogoutButton />
       <div className="contact-form">
         <h1 className="form-heading">Contact Us</h1>
         <p className="form-subtext">
@@ -68,6 +70,8 @@ const Contact = () => {
           <button type="submit">Submit</button>
         </form>
       </div>
+    </div>
+    <Footer />
     </div>
   );
 };

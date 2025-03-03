@@ -2,14 +2,16 @@ import React from "react";
 import "../styles/TermsService.css"; // Import the CSS file
 import HomeButton from "../components/HomeButton";
 import LogoutButton from "../components/LogoutButton";
+import Footer from "../components/Footer";
 
 const TermsService = () => {
   return (
-    <div className="terms-service-page">
-      <HomeButton />
-      <LogoutButton />
-      <h1>Terms of Service</h1>
-      <p>
+    <div className="terms-service-page-container">
+      <div className="terms-service-page">
+        <HomeButton />
+        <LogoutButton />
+        <h1>Terms of Service</h1>
+        <p>
         Welcome to ShePlays: Football! By accessing or using our website and
         services, you agree to the following terms:
       </p>
@@ -51,6 +53,8 @@ const TermsService = () => {
         If you have any questions, contact us at{" "}
         <a href="mailto:contact@sheplaysfootball.com">sheplaysfootball@gmail.com</a>.
       </p>
+    </div>
+    <Footer />
     </div>
   );
 };

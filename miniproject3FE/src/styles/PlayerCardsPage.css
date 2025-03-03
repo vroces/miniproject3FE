@@ -110,11 +110,11 @@
 
 .player-card {
   position: absolute;
-  width: 350px; /* Adjust size as needed */
-  height: 500px;
-  background: rgb(251, 193, 3);
+  width: 330px; /* Adjust size as needed */
+  height: 480px;
+  background: rgb(0, 0, 0);
   border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 2px rgb(251, 193, 3);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -122,15 +122,16 @@
   text-align: center;
   transition: transform 0.3s ease-in-out;
   z-index: 1;
-  color: black;
+  color: rgb(255, 254, 252);
 }
 
 .player-card img {
-  width: 100%;  /* Set the image to take up the full width of the card */
-  height: 50%;  /* Set the height to take up half of the card */
-  object-fit: contain;  /* Ensures the image maintains aspect ratio and fills the space */
+  width: 250px;  /* Set the image to take up the full width of the card */
+  height: 250px;  /* Set the height to take up half of the card */
+  object-fit: cover;  /* Ensures the image maintains aspect ratio and fills the space */
   margin-bottom: 15px;  /* Space below the image */
   border-radius: 0;  /* Remove the circular border */
+  border: 1px solid rgb(251, 193, 3);
 }
 
 .player-card.moving {
