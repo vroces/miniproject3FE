@@ -49,10 +49,10 @@ const CreatePlayerCard = () => {
         if (follows && follows.length > 0) {
           // Extract the player IDs that the user is following
           // Adjust this based on your actual API response structure
-          const followedPlayerIds = follows.map((follow) => follow.player_card_id);
+          const followedPlayerIds = follows.map((follow) => follow._id);
+          console.log(followedPlayerIds)
 
-          // Fetch player card details for each followed player
-// Fetch player card details for each followed player
+ 
 // Fetch player card details for each followed player
 Promise.all(
   followedPlayerIds
