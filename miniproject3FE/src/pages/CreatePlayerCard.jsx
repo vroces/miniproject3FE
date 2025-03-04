@@ -11,104 +11,32 @@ const CreatePlayerCard = () => {
   const [location, setLocation] = useState("");
   const [team, setTeam] = useState("");
   const [bio, setBio] = useState("");
-  const [existingCard, setExistingCard] = useState(null);
-  const [followedPlayers, setFollowedPlayers] = useState([]); // Track followed players' details
   const { user } = useAuth(); // Get logged-in user from AuthContext
-  const base_url = "http://localhost:5001/api/"
+  const base_url = "http://localhost:5001/api/";
 
   useEffect(() => {
-    if (!user) {
-      return; // If no user is logged in, don't fetch followed players.
-    }
+    if (!user) return;
+
+    console.log("Fetching existing player card for user:", user._id); // Log user ID
+
     // Fetch the player's existing card using user._id
     fetch(`${base_url}player-card/${user._id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.profilePic) {
-          setExistingCard(data); // If card exists, populate the state
-          setProfilePic(data.profilePic);
-          setPosition(data.position);
-          setLocation(data.location);
-          setTeam(data.team);
-          setBio(data.bio);
-        }
-      })
-      .catch((err) => console.log("Error fetching player card:", err));
-    // Fetch players that the current user is following
-    fetch(`${base_url}follow/user/${user._id}`)
       .then((res) => {
-        console.log(res)
         if (!res.ok) {
-          
-          throw new Error(`HTTP error! Status: ${res.status}`);
+          throw new Error("Player card not found");
         }
         return res.json();
       })
-      .then((follows) => {
-        console.log("Follows data:", follows);
-        if (follows && follows.length > 0) {
-          // Extract the player IDs that the user is following
-          // Adjust this based on your actual API response structure
-          const followedPlayerIds = follows.map((follow) => follow._id);
-          console.log(followedPlayerIds)
-
- 
-// Fetch player card details for each followed player
-Promise.all(
-  followedPlayerIds
-    .filter((playerCardId) => playerCardId !== undefined) // Filter out undefined IDs
-    .map((playerCardId) =>
-      fetch(`${base_url}player-card/card/${playerCardId}`)
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error(`Failed to fetch player card for ID: ${playerCardId}`);
-          }
-          return res.json();
-        })
-    )
-)
-  .then((playerCards) => {
-    console.log("Fetched player cards:", playerCards);
-    // Now fetch user full names based on user_id
-    const fetchUserNames = playerCards.map((player) =>
-      fetch(`${base_url}user/${player.user_id}`)
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error(`Failed to fetch user details for ID: ${player.user_id}`);
-          }
-          return res.json();
-        })
-    );
-
-    // Fetch full names for each followed player
-    Promise.all(fetchUserNames)
-      .then((users) => {
-        console.log("Fetched user details:", users);
-        const updatedPlayerCards = playerCards.map((player, index) => ({
-          ...player,
-          full_name: users[index]?.full_name || "Unknown Player" // Add fallback
-        }));
-        setFollowedPlayers(updatedPlayerCards);
+      .then((data) => {
+        console.log("Existing player card data:", data); // Log the fetched data
+        setProfilePic(data.profilePic);
+        setPosition(data.position);
+        setLocation(data.location);
+        setTeam(data.team);
+        setBio(data.bio);
       })
-      .catch((err) => {
-        console.error("Error fetching user details:", err);
-        // Still show player cards even if names can't be fetched
-        setFollowedPlayers(playerCards);
-      });
-  })
-  .catch((err) => {
-    console.error("Error fetching player cards:", err);
-    setFollowedPlayers([]);
-  });
-} else {
-  setFollowedPlayers([]); // No follows found
-}
-})
-  .catch((err) => {
-    console.error("Error fetching follows:", err);
-    setFollowedPlayers([]);
-  });
-}, [user]); // Trigger the effect when the user changes
+      .catch((err) => console.log("Error fetching player card:", err));
+  }, [user]);
 
   // Handle profile pic change
   const handleProfilePicChange = (e) => {
@@ -116,73 +44,57 @@ Promise.all(
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setProfilePic(reader.result); // Set image preview
+        console.log("Profile picture updated"); // Log profile picture update
+        setProfilePic(reader.result);
       };
-      reader.readAsDataURL(file); // Read the file and convert to base64
+      reader.readAsDataURL(file);
     }
   };
-  const handleSave = (e) => {
-    e.preventDefault(); // Prevent default form submission
+
+  const handleSave = async (e) => {
+    e.preventDefault();
     if (!user || !user._id) {
-      console.log("Error: User ID is missing.");
+      console.log("Error: User ID is missing."); // Log if user ID is missing
       return;
     }
+
     const userData = {
-      user_id: user._id.toString(), // Ensure user_id is sent as a string
+      user_id: user._id,
       profilePic,
       position,
       location,
       team,
-      bio
+      bio,
     };
-    const url = `${base_url}player-card`; // Removed hardcoded localhost which can cause CORS issues
-    if (existingCard) {
-      fetch(`${url}/update/${existingCard.user_id ? existingCard.user_id.toString() : existingCard._id.toString()}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      })
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error(`HTTP error! Status: ${res.status}`);
-          }
-          return res.json();
-        })
-        .then((data) => {
-          console.log("Player card updated", data);
-          alert("Profile updated successfully!");
-        })
-        .catch((err) => {
-          console.error("Error updating profile:", err);
-          alert("Failed to update profile. Please try again.");
-        });
-    } else {
-      fetch(url, {
+
+    const url = `${base_url}player-card`;
+
+    try {
+      let response, data;
+
+      console.log("Saving player card data:", userData); // Log player card data to be saved
+
+      response = await fetch(url, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
-      })
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error(`HTTP error! Status: ${res.status}`);
-          }
-          return res.json();
-        })
-        .then((data) => {
-          console.log("Player card created", data);
-          setExistingCard(data); // Update the state with the newly created card
-          alert("Profile created successfully!");
-        })
-        .catch((err) => {
-          console.error("Error creating profile:", err);
-          alert("Failed to create profile. Please try again.");
-        });
+      });
+
+      data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Something went wrong");
+      }
+
+      console.log("Player card saved successfully:", data); // Log the saved player card data
+
+      alert("Profile created successfully!");
+    } catch (err) {
+      console.error("Error saving profile:", err);
+      alert("Failed to save profile. Please try again.");
     }
   };
+
   return (
     <div className="profile-page-container">
       <div className="profile-page-content">
@@ -191,9 +103,10 @@ Promise.all(
             type="file"
             onChange={handleProfilePicChange}
             accept="image/*"
-            id="profile-pic-input"
           />
-          {profilePic && <img src={profilePic} alt="Profile" className="profile-page-pic" />}
+          {profilePic && (
+            <img src={profilePic} alt="Profile" className="profile-page-pic" />
+          )}
           <div className="profile-page-buttons">
             <HomeButton />
             <LogoutButton />
@@ -225,44 +138,12 @@ Promise.all(
               onChange={(e) => setBio(e.target.value)}
             />
           </div>
-          <button type="submit">
-            {existingCard ? "Edit Profile" : "Create Profile"}
-          </button>
+          <button type="submit">Create Profile</button>
         </form>
-        {/* Display followed players */}
-        {console.log("Followed Players State:", followedPlayers)}
-        <div className="followed-players-list">
-  <h3>Players I'm Following:</h3>
-  {followedPlayers.length > 0 ? (
-    <ul>
-      {followedPlayers.map((playerCard) => (
-        <li key={playerCard._id}>
-          <div>
-            <span>
-              {playerCard.full_name || 'Unknown Player'} - {playerCard.position || 'N/A'} - {playerCard.team || 'N/A'}
-            </span>
-            <p>{playerCard.bio || 'No bio available'}</p> {/* Display bio */}
-          </div>
-        </li>
-      ))}
-    </ul>
-  ) : (
-    <p>You're not following any players yet.</p>
-  )}
-</div>
-
       </div>
       <Footer />
     </div>
   );
 };
+
 export default CreatePlayerCard;
-
-
-
-
-
-
-
-
-

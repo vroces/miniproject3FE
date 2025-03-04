@@ -60,7 +60,7 @@ const PlayerCard = ({ player, onSwipeLeft, onSwipeRight }) => {
      
 
       <h3>{player.name}</h3>
-      <p><strong>Position:</strong>{player.position}</p>
+      <p><strong>Position: </strong>{player.position}</p>
       <p><strong>Location:</strong> {player.location}</p>
       <p><strong>Team:</strong> {player.team}</p>
       <p>{player.bio}</p>
